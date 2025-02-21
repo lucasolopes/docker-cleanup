@@ -16,7 +16,7 @@ fi
 RETENTION_SECONDS=$((RETENTION_DAYS * 86400))
 CURRENT_TIME=$(date +%s)
 
-echo "Executando limpeza Docker em $(date)" >> ./log_limpeza_docker.txt
+echo "Executando limpeza Docker em $(date)"
 
 # Remover contêineres parados há mais de X dias
 docker container prune -f --filter "until=$((RETENTION_DAYS_CONTAINER * 24))h" > /dev/null 2>&1
@@ -29,14 +29,14 @@ for volume in $(docker volume ls -q --filter "dangling=true"); do
     CREATED_AT=$(docker volume inspect --format '{{.CreatedAt}}' "$volume" 2>/dev/null)
 
     if [ -z "$CREATED_AT" ]; then
-        echo "Ignorando volume sem data de criação: $volume" >> ./log_limpeza_docker.txt
+        echo "Ignorando volume sem data de criação: $volume"
         continue
     fi
 
     CREATED_TIMESTAMP=$(date -d "$CREATED_AT" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S" "$CREATED_AT" +%s)
 
     if [ -n "$CREATED_TIMESTAMP" ] && [ $((CURRENT_TIME - CREATED_TIMESTAMP)) -gt $((VOLUME_RETENTION_DAYS * 86400)) ]; then
-        echo "Removendo volume antigo: $volume" >> ./log_limpeza_docker.txt
+        echo "Removendo volume antigo: $volume"
         docker volume rm "$volume" > /dev/null 2>&1
     fi
 done
@@ -46,14 +46,14 @@ for network in $(docker network ls -q --filter "dangling=true"); do
     CREATED_AT=$(docker network inspect --format '{{.CreatedAt}}' "$network" 2>/dev/null)
 
     if [ -z "$CREATED_AT" ]; then
-        echo "Ignorando rede sem data de criação: $network" >> ./log_limpeza_docker.txt
+        echo "Ignorando rede sem data de criação: $network"
         continue
     fi
 
     CREATED_TIMESTAMP=$(date -d "$CREATED_AT" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S" "$CREATED_AT" +%s)
 
     if [ -n "$CREATED_TIMESTAMP" ] && [ $((CURRENT_TIME - CREATED_TIMESTAMP)) -gt $((NETWORK_RETENTION_DAYS * 86400)) ]; then
-        echo "Removendo rede antiga: $network" >> ./log_limpeza_docker.txt
+        echo "Removendo rede antiga: $network"
         docker network rm "$network" > /dev/null 2>&1
     fi
 done
