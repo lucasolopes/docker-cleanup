@@ -1,0 +1,15 @@
+Removendo volume antigo: quero-boot_postgres13
+Removendo volume antigo: quero-boot_querobolsa-bundle
+Removendo volume antigo: quero-boot_redis
+Removendo volume antigo: quero-boot_root-home
+Removendo volume antigo: quero-boot_user-home
+Executando limpeza Docker em qua 19 fev 2025 10:35:05 -03
+Ignorando rede sem data de criação: e5c0a5d371e5
+Executando limpeza Docker em qua 19 fev 2025 10:36:36 -03
+Removendo volume antigo: quero-boot_postgres13
+Removendo volume antigo: quero-boot_querobolsa-bundle
+Removendo volume antigo: quero-boot_redis
+Executando limpeza Docker em sex 21 fev 2025 10:59:39 -03
+Executando limpeza Docker em sex 21 fev 2025 11:03:37 -03
+Executando limpeza Docker em sex 21 fev 2025 11:04:13 -03
+Executando limpeza Docker em sex 21 fev 2025 11:06:50 -03
